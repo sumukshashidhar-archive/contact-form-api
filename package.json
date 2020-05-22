@@ -18,10 +18,13 @@
   },
   "homepage": "https://github.com/sumukshashidhar/contact-form-api#readme",
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "^5.9.15"
+    "fs": "0.0.1-security",
+    "mongoose": "^5.9.15",
+    "nanoid": "^3.1.9"
   }
 }

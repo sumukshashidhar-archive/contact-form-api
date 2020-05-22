@@ -4,12 +4,17 @@ var express = require('express');
 var bodyParser = require("body-parser");
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
+const fs = require('fs');
+const jwt = require('jsonwebtoken')
 const mongoose = require("mongoose");
+const bcrypt = require('bcrypt');
 const db = require('./config/database.js');
 import { nanoid } from 'nanoid';
 const client = require('./models/client.js')
 const JWT_OPTIONS = require('./config/jwt.js')
-
+const privateKEY  = fs.readFileSync('./keys/private.key', 'utf8');
+const publicKEY  = fs.readFileSync('./keys/public.key', 'utf8');
+const transactionKEY = fs.readFileSync('./keys/transaction.key', 'utf8')
 var app = express();
 mongoose.Promise = global.Promise; 
 app.use(express.static("styles"));
@@ -61,7 +66,7 @@ app.get('/login', function(req, res){
   })
 
   app.post('/login', function(req, res){
-	user.findOne({DisplayName: req.body.DisplayName}, function(err, USER_OBJ){
+	client.findOne({username: req.body.username}, function(err, USER_OBJ){
 	  if(err){
 		console.log(err)
 	  }
@@ -72,7 +77,7 @@ app.get('/login', function(req, res){
 		  }
 		  else{
 			if(BCRYPT_RES==true){
-			  var token = jwt.sign({nickname: req.body.DisplayName, id: USER_OBJ._id, role: USER_OBJ.userType}, privateKEY, JWT_OPTIONS.signOptions)
+			  var token = jwt.sign({nickname: req.body.username, id: USER_OBJ._id, role: USER_OBJ.userType}, privateKEY, JWT_OPTIONS.signOptions)
 			  console.log("jwt generated")
 			  res.cookie('access_token', token, {expires: new Date(Date.now() + 24 * 60 * 60 * 1000)})
 			  activeUsers = activeUsers + 1;
@@ -137,3 +142,10 @@ app.post('/api/contactform/', function(req, res) {
 		res.send("Failed"); 
 	}
 });
+
+
+app.get('/logout', function(req, res){
+	console.log("Getting the logout method and clearing cookies")
+	res.clearCookie('access_token').redirect('/login')
+  })
+  
