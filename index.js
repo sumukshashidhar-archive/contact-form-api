@@ -31,13 +31,17 @@ app.use(function (req, res, next) {
 	    res.setHeader("Access-Control-Allow-Origin", "*");
 		    next();
 });
+
+app.use(express.static("styles"));
+app.set('view engine', 'ejs');
 //To get data from the angular project
 app.use(bodyParser.json({ type: '*' }));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
 
-app.listen(process.env.PORT, process.env.IP, function (req, res) {
-	    console.log("SERVER STARTED");
+app.listen(3000, process.env.IP, function (req, res) {
+		console.log("SERVER STARTED");
+		console.log(process.env.PORT)
 });
 
 
@@ -63,7 +67,22 @@ app.get('/login', function(req, res){
 	  res.render('login')
 	}
   })
-
+  app.get('/register', function(req, res){
+	if(req.cookies.access_token!=undefined){
+	  jwt.verify(req.cookies.access_token, publicKEY, JWT_OPTIONS.verifyOptions, function(err, decodedToken){
+		if(err){
+		  console.log(err)
+		  res.clearCookie().redirect('/login')
+		}
+		else{
+		  res.redirect('/home')
+		}
+	  })
+	}
+	else{
+	  res.render('register')
+	}
+  })
   app.post('/login', function(req, res){
 	client.findOne({username: req.body.username}, function(err, USER_OBJ){
 	  if(err){
