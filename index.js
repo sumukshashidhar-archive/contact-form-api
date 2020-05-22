@@ -9,12 +9,11 @@ const jwt = require('jsonwebtoken')
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 const db = require('./config/database.js');
-import { nanoid } from 'nanoid';
+const nanoid = require('nanoid');
 const client = require('./models/client.js')
 const JWT_OPTIONS = require('./config/jwt.js')
 const privateKEY  = fs.readFileSync('./keys/private.key', 'utf8');
 const publicKEY  = fs.readFileSync('./keys/public.key', 'utf8');
-const transactionKEY = fs.readFileSync('./keys/transaction.key', 'utf8')
 var app = express();
 mongoose.Promise = global.Promise; 
 app.use(express.static("styles"));
