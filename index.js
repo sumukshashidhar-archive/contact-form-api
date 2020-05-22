@@ -17,7 +17,7 @@ app.use(function (req, res, next) {
 app.use(bodyParser.json({ type: '*' }));
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.listen(PORT, process.env.IP, function (req, res) {
+app.listen(process.env.PORT, process.env.IP, function (req, res) {
 	    console.log("SERVER STARTED");
 });
 
