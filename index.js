@@ -23,7 +23,8 @@ app.listen(process.env.PORT, process.env.IP, function (req, res) {
 
 
 app.get('/', function(res, req) {
-	console.log("Hit the home page"); 
+	console.log("Hit the home page");
+	res.send("The server is running");
 });
 
 
