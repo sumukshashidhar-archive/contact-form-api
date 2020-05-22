@@ -15,6 +15,7 @@ const JWT_OPTIONS = require('./config/jwt.js')
 const privateKEY  = fs.readFileSync('./keys/private.key', 'utf8');
 const publicKEY  = fs.readFileSync('./keys/public.key', 'utf8');
 var app = express();
+var uuid = require('uuid-random');
 mongoose.Promise = global.Promise; 
 app.use(express.static("styles"));
 
@@ -124,11 +125,12 @@ app.post('/register', function(req, res){
 		res.redirect(500, '/register')
 	  }
 	  else{
-		var newUser = new user({
+		var keys = uuid();
+		var newUser = new client({
 		  username: req.body.username, 
 		  password: BCRYPT_HASH,
 		  userType: "user",
-		  key: nanoid()
+		  key: keys
 		})
   
 		newUser.save(function(err, obj){
