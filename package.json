@@ -1,0 +1,25 @@
+{
+  "name": "contact-form-api",
+  "version": "1.0.0",
+  "description": "An API that allows you to retrieve data from contact forms everywhere",
+  "main": "index.js",
+  "scripts": {
+	"start":"node index.js", 
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sumukshashidhar/contact-form-api.git"
+  },
+  "author": "Sumuk Shashidhar",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/sumukshashidhar/contact-form-api/issues"
+  },
+  "homepage": "https://github.com/sumukshashidhar/contact-form-api#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}
